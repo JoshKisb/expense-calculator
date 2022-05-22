@@ -32,4 +32,19 @@ class ExpenseCSVReaderTest extends TestCase{
       $expenses = $this->reader->getExpenses();
       $this->assertEquals($expenses, [new Expense("Food", 30.8, 2)]);
    }
+
+   public function testMultipleCSVLinesReturnMultipleExpenses()
+   {
+      file_put_contents($this->filename, "Food, 30.8, 2\nHotel, 10, 4");
+      $expenses = $this->reader->getExpenses();
+      $this->assertEquals(
+         $expenses, 
+         [
+            new Expense("Food", 30.8, 2),
+            new Expense("Hotel", 10, 4),
+         ]
+      );
+   }
+
+
 }
