@@ -28,10 +28,32 @@ class ExpenseCategoryCalcTest extends TestCase
    public function testSingleExpenseReturnsSingleCategory()
    {
       $expense = new Expense("Food", 100, 2);
-      $this->calc->addExpenses([$expense]);
+      $this->calc->addExpense($expense);
       $this->assertSame(
          $this->calc->getCategories(),
          ["Food" => 200.0]
+      );
+   }
+
+   public function testMultipleExpensesReturnValidCategories()
+   {
+      $this->calc->addExpense(new Expense("Food", 100, 2));
+      $this->calc->addExpense(new Expense("Hotel", 400, 1));
+      $this->calc->addExpense(new Expense("Fuel", 60.2, 5));
+      $this->assertSame(
+         $this->calc->getCategories(),
+         ["Food" => 200.0, "Hotel" => 400.0, "Fuel" => 301.0]
+      );
+   }
+
+   public function testMultipleExpensesInCategoriesReturnValidCategories()
+   {
+      $this->calc->addExpense(new Expense("Food", 100, 2));
+      $this->calc->addExpense(new Expense("Food", 400, 1));
+      $this->calc->addExpense(new Expense("Fuel", 60.2, 5));
+      $this->assertSame(
+         $this->calc->getCategories(),
+         ["Food" => 600.0, "Fuel" => 301.0]
       );
    }
 }

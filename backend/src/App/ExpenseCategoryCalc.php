@@ -24,7 +24,8 @@ class ExpenseCategoryCalc {
    {
       $this->expenses[] = $expense;
       $category = $expense->getCategory();
-      $total = $expense->getTotal();
+      $prevTotal = $this->categories[$category] ?? 0;
+      $total = $prevTotal + $expense->getTotal();
       $this->categories[$category] = $total;
    }
 
