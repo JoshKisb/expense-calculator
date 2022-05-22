@@ -1,5 +1,6 @@
 <?php
 
+use App\Expense;
 use App\ExpenseCategoryCalc;
 use PHPUnit\Framework\TestCase;
 
@@ -24,17 +25,13 @@ class ExpenseCategoryCalcTest extends TestCase
       $this->assertSame($this->calc->getCategories(), []);
    }
 
-   public function skiptestSingleExpenseReturnsSingleCategory()
+   public function testSingleExpenseReturnsSingleCategory()
    {
-      $expense = [
-         "category" => "Food",
-         "price" => 100,
-         "amount" => 2,
-      ];
+      $expense = new Expense("Food", 100, 2);
       $this->calc->addExpenses([$expense]);
       $this->assertSame(
          $this->calc->getCategories(),
-         ["Food" => 200]
+         ["Food" => 200.0]
       );
    }
 }

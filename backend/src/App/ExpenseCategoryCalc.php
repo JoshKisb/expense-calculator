@@ -13,17 +13,19 @@ class ExpenseCategoryCalc {
       $this->categories = [];
    }
 
-   public function addExpenses(Array $expenses = [])
+   public function addExpenses(array $expenses = [])
    {
       foreach ($expenses as $expense) {
          $this->addExpense($expense);
       }
    }
 
-   public function addExpense(Array $expense)
+   public function addExpense(Expense $expense)
    {
       $this->expenses[] = $expense;
-      $this->categories[] = $expense;
+      $category = $expense->getCategory();
+      $total = $expense->getTotal();
+      $this->categories[$category] = $total;
    }
 
    public function getCategories()
