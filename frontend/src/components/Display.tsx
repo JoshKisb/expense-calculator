@@ -19,7 +19,7 @@ const Display: React.FC = () => {
 			.post(url, formData)
 			.then((res) => {
             console.log(res.data);
-            setCategories(res.data);
+            setCategories(res.data.categories);
             setShowTable(true);
 			})
 			.finally(() => {

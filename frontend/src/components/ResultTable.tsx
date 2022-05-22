@@ -19,7 +19,7 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 						{categories.length > 0 ? (
 							<>
 								{categories.map((category) => (
-									<tr>
+									<tr key={category.name}>
 										<td>{category.name}</td>
 										<td>{category.amount}</td>
 									</tr>
