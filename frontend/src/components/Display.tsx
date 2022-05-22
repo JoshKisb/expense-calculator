@@ -14,13 +14,13 @@ const Display: React.FC = () => {
 		const apiUrl = import.meta.env.VITE_API_URL;
 		const url = `${apiUrl}/upload.php`;
 
-      setLoading(true);
+		setLoading(true);
 		axios
 			.post(url, formData)
 			.then((res) => {
-            console.log(res.data);
-            setCategories(res.data.categories);
-            setShowTable(true);
+				console.log(res.data);
+				setCategories(res.data.categories);
+				setShowTable(true);
 			})
 			.finally(() => {
 				setLoading(false);
@@ -31,7 +31,17 @@ const Display: React.FC = () => {
 		if (loading) {
 			return <Loading />;
 		} else if (showTable) {
-			return <ResultTable categories={categories} />;
+			return (
+				<div>
+					<button
+						onClick={() => setShowTable(false)}
+						className="btn btn-outline-secondary"
+					>
+						&larr; back
+					</button>
+					<ResultTable categories={categories} />
+				</div>
+			);
 		} else {
 			return <Form onSubmit={uploadCSV} />;
 		}
