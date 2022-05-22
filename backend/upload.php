@@ -1,4 +1,8 @@
 <?php
+
+// for cors
+header("Access-Control-Allow-Origin: *");
+
    if(isset($_FILES['csv'])){
       $errors = [];
       $file_size =$_FILES['csv']['size'];
@@ -13,7 +17,9 @@
       
       if(empty($errors)==true){
          // move_uploaded_file($file_tmp,"images/".$file_name);
-         echo "Success";
+         $data = ["categories" => []];
+         header('Content-Type: application/json; charset=utf-8');
+         echo json_encode($data);
       }else{
          return json_encode(["error" => $errors]);
       }

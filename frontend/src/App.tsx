@@ -1,12 +1,10 @@
-import { useState } from "react";
-import logo from "./logo.svg";
+import React from "react";
 import "./App.scss";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Display from "./components/Display";
 
 function App() {
-	const [count, setCount] = useState(0);
 
 	return (
 		<div className="App bg-light pt-3">
