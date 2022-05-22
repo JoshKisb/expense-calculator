@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Exception;
+
 use function PHPUnit\Framework\isNull;
 
 /**
@@ -10,14 +12,6 @@ use function PHPUnit\Framework\isNull;
 class ExpenseCSVReader {
    /*
    if (($handle = fopen("test.csv", "r")) !== FALSE) {
-      while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-         $num = count($data);
-         echo "<p> $num fields in line $row: <br /></p>\n";
-         $row++;
-         for ($c=0; $c < $num; $c++) {
-            echo $data[$c] . "<br />\n";
-         }
-      }
       fclose($handle);
    }
    */
@@ -58,7 +52,12 @@ class ExpenseCSVReader {
    public function parseCSV()
    {
       $expenses = [];
-
+      while (($data = fgetcsv($this->fp)) !== FALSE) {
+         $num = count($data);
+         if ($num >= 3) {
+            $expenses[] = new Expense($data[0], $data[1], $data[2]);
+         }
+      }
       $this->expenses = $expenses;
    }
 }
