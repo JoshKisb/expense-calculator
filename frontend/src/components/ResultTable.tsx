@@ -21,7 +21,7 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 								{categories.map((category) => (
 									<tr key={category.name}>
 										<td>{category.name}</td>
-										<td>{category.amount}</td>
+										<td>{category.amount.toLocaleString("en-US")}</td>
 									</tr>
 								))}
 							</>
