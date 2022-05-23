@@ -1,5 +1,5 @@
 <?php
-require "./vendor/autoload.php";
+require "../vendor/autoload.php";
 
 use App\ExpenseCategoryCalc;
 use App\ExpenseCSVReader;
@@ -21,23 +21,29 @@ if (isset($_FILES['csv'])) {
       $errors[] = 'File size must be less than 2MB';
    }
 
-   if (empty($errors) == true) {
-      // move_uploaded_file($file_tmp,"images/".$file_name);
-      // read csv
+   if (empty($errors)) {
       $reader = new ExpenseCSVReader($file_tmp);
+      $valid = $reader->validate();
+
+      if (!$valid) {
+         $errors[] = "Improper format in CSV";
+      }
+   }
+
+   if (empty($errors)) {
       $expenses = $reader->getExpenses();
 
       // calculate total for categories
       $calc = new ExpenseCategoryCalc();
       $calc->addExpenses($expenses);
-      
+
       $categoryTotals = $calc->getCategories();
 
       // convert to format [{ name, amount }]
       $result = [];
-      foreach($categoryTotals as $category => $total) {
+      foreach ($categoryTotals as $category => $total) {
          $result[] = [
-            "name" => $category, 
+            "name" => $category,
             "amount" => $total
          ];
       }

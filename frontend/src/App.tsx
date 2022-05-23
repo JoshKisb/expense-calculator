@@ -7,7 +7,7 @@ import Display from "./components/Display";
 function App() {
 
 	return (
-		<div className="App bg-light pt-3">
+		<div className="App pt-3">
 			<div className="container d-flex flex-column h-100">
 				<Header />
 				<Display />
