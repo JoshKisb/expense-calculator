@@ -4,20 +4,15 @@ namespace App;
 
 use Exception;
 
-use function PHPUnit\Framework\isNull;
-
 /**
  * Reads a csv file and returns expenses
  */
 class ExpenseCSVReader {
-   /*
-   if (($handle = fopen("test.csv", "r")) !== FALSE) {
-      fclose($handle);
-   }
-   */
+  
    private $filepath;
    private $fp;
    private ?array $expenses;
+   private $valid = true;
 
    public function __construct($filepath)
    {
@@ -31,31 +26,51 @@ class ExpenseCSVReader {
          fclose($this->fp);
    }
 
-   public function open()
+   private function open()
    {
       if (!isset($this->fp)) {
          $this->fp = fopen($this->filepath, "r");
       }
    }
 
-   public function getExpenses(): array
+   private function openAndParse()
    {
       $this->open();
 
       // parse csv if hasnt yet been parsed
-      if (isNull($this->expenses))
+      if (is_null($this->expenses))
          $this->parseCSV();
+   }
 
+   public function validate(): bool
+   {
+      $this->openAndParse();
+      return $this->valid;
+   }
+
+   public function getExpenses(): array
+   {
+      $this->openAndParse();
       return $this->expenses;
+   }
+
+   private function validateRow($row): bool
+   {
+      $num = count($row);
+      return ($num >= 3 && is_numeric($row[1]) && is_numeric($row[2]));
    }
 
    public function parseCSV()
    {
       $expenses = [];
       while (($data = fgetcsv($this->fp)) !== FALSE) {
-         $num = count($data);
-         if ($num >= 3) {
-            $expenses[] = new Expense($data[0], $data[1], $data[2]);
+         if ($this->validateRow($data)) {
+            $category = $data[0];
+            $price = floatval($data[1]);
+            $quantity = intval($data[2]);
+            $expenses[] = new Expense($category, $price, $quantity);
+         } else {
+            $this->valid = false;
          }
       }
       $this->expenses = $expenses;

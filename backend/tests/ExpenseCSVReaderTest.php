@@ -46,5 +46,17 @@ class ExpenseCSVReaderTest extends TestCase{
       );
    }
 
+   public function testValidationReturnsTrueForValidCSV()
+   {
+      file_put_contents($this->filename, "Food, 30.8, 2\nHotel, 10, 4");
+      $this->assertTrue($this->reader->validate());
+   }
+
+   public function testValidationReturnsFalseForInvalidCSV()
+   {
+      file_put_contents($this->filename, "Food, Much money, 2\nHotel, 10, 4");
+      $this->assertFalse($this->reader->validate());
+   }
+
 
 }
