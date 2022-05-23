@@ -1,7 +1,7 @@
 # Expense-Calculator
 
 Application to parse CSV files and calculate total amounts spent per category.   
-Developed in PHP and React  
+Developed in PHP and React-Typescript   
 
 ## Running the application  
 To run this application you need to have php installed  
@@ -26,5 +26,22 @@ Serve the dist folder of the frontend using whatever server you prefer.
 
 ```bash
 npx serve dist
+```
+
+
+
+## Testing
+The backend does include some tests that use phpunit 
+
+Install dependencies (phpunit) if not already installed   
+
+```bash
+composer install
+```
+
+Run the tests
+
+```bash
+composer test
 ```
 
