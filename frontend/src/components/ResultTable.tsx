@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { Category } from "../interfaces/Category";
 
 interface ResultTableProps {
 	categories: Category[];
 }
+const enum SortDirection {
+	// Unsorted,
+	Asc,
+	Desc,
+}
 
 const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
+	const [sortDir, setSortDir] = useState(SortDirection.Desc);
 	return (
 		<div className="d-flex result-table">
 			<div className="table-responsive w-100">
@@ -12,7 +19,18 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 					<thead className="table-dark">
 						<tr>
 							<th>Category</th>
-							<th>Amount</th>
+							<th>
+								<div className="sortable-header">
+									<p>Amount</p>
+									<div
+										className={`arrow-${
+											sortDir === SortDirection.Desc
+												? "down"
+												: "up"
+										}`}
+									></div>
+								</div>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -21,7 +39,11 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 								{categories.map((category) => (
 									<tr key={category.name}>
 										<td>{category.name}</td>
-										<td>{category.amount.toLocaleString("en-US")}</td>
+										<td>
+											{category.amount.toLocaleString(
+												"en-US"
+											)}
+										</td>
 									</tr>
 								))}
 							</>

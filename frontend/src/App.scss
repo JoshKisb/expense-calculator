@@ -19,3 +19,29 @@
   width: 100%;
   margin: 50px auto 10px;
 }
+
+.sortable-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  p {
+    margin: 0px 8px 0px;
+  }
+}
+
+.arrow-up {
+	width: 0;
+	height: 0;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-bottom: 6px solid #fff;
+}
+
+.arrow-down {
+	width: 0;
+	height: 0;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid #fff;
+}
