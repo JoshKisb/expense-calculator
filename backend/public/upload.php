@@ -50,6 +50,7 @@ if (isset($_FILES['csv'])) {
       $data = ["categories" => $result];
       echo json_encode($data);
    } else {
+      http_response_code(400);
       echo json_encode(["error" => $errors]);
    }
 }

@@ -26,7 +26,8 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
 						className="form-control form-control-lg"
 						name="csv"
 						id="csv"
-						type="file"
+						type="file" 
+						accept=".csv, text/csv"
 					/>
 				</div>
 				<div className="mt-3 d-flex justify-content-end">

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Category } from "../interfaces/Category";
 import Form from "./Form";
 import Loading from "./Loading";
@@ -9,6 +9,7 @@ const Display: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [showTable, setShowTable] = useState(false);
+	const [error, setError] = useState("");
 
 	const uploadCSV = (formData: FormData) => {
 		const apiUrl = import.meta.env.VITE_API_URL;
@@ -22,10 +23,33 @@ const Display: React.FC = () => {
 				setCategories(res.data.categories);
 				setShowTable(true);
 			})
+			.catch((err) => {
+				console.log("err", err);
+				if (err.response?.status === 400) {
+					const message = err.response?.data?.error?.[0];
+					setError(message);
+				} else {
+					setError(err.message);
+				}
+			})
 			.finally(() => {
 				setLoading(false);
 			});
 	};
+
+	useEffect(() => {
+		let timer: number;
+		if (!!error) {
+			timer = setTimeout(() => {
+				setError("");
+			}, 8000);
+		}
+		// clear timeout... not sure if... hmm
+		// return () => {
+		// 	if (!!timer)
+		// 		clearTimeout(timer);
+		// };
+	}, [error]);
 
 	const renderPage = () => {
 		if (loading) {
@@ -43,7 +67,18 @@ const Display: React.FC = () => {
 				</div>
 			);
 		} else {
-			return <Form onSubmit={uploadCSV} />;
+			return (
+				<div>
+					{!!error && (
+						<div className="csv-form mb-0">
+							<div className="alert alert-danger" role="alert">
+								{error}
+							</div>
+						</div>
+					)}
+					<Form onSubmit={uploadCSV} />
+				</div>
+			);
 		}
 	};
 
