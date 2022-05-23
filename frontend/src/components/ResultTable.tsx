@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Category } from "../interfaces/Category";
 
 interface ResultTableProps {
@@ -11,7 +12,31 @@ const enum SortDirection {
 }
 
 const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
+	const [displayCategories, setDisplayCategories] = useState(categories);
 	const [sortDir, setSortDir] = useState(SortDirection.Desc);
+
+	const toggleSortDir = () => {
+		setSortDir((state) =>
+			state === SortDirection.Desc
+				? SortDirection.Asc
+				: SortDirection.Desc
+		);
+	};
+
+	useEffect(() => {
+		let sorted;
+		if (sortDir === SortDirection.Asc) {
+			sorted = categories.concat().sort((a, b) => {
+				return a.amount - b.amount;
+			});
+		} else {
+			sorted = categories.concat().sort((a, b) => {
+				return b.amount - a.amount;
+			});
+		}
+		setDisplayCategories(sorted);				
+	}, [sortDir]);
+
 	return (
 		<div className="d-flex result-table">
 			<div className="table-responsive w-100">
@@ -20,7 +45,10 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 						<tr>
 							<th>Category</th>
 							<th>
-								<div className="sortable-header">
+								<div
+									onClick={toggleSortDir}
+									className="sortable-header"
+								>
 									<p>Amount</p>
 									<div
 										className={`arrow-${
@@ -34,9 +62,9 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 						</tr>
 					</thead>
 					<tbody>
-						{categories.length > 0 ? (
+						{displayCategories.length > 0 ? (
 							<>
-								{categories.map((category) => (
+								{displayCategories.map((category) => (
 									<tr key={category.name}>
 										<td>{category.name}</td>
 										<td>
