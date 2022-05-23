@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
 import { Category } from "../interfaces/Category";
 
 interface ResultTableProps {
@@ -34,11 +34,11 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 				return b.amount - a.amount;
 			});
 		}
-		setDisplayCategories(sorted);				
+		setDisplayCategories(sorted);
 	}, [sortDir]);
 
 	return (
-		<div className="d-flex result-table">
+		<div className="result-table">
 			<div className="table-responsive w-100">
 				<table className="table table-striped">
 					<thead className="table-dark">
@@ -87,6 +87,16 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 					</tbody>
 				</table>
 			</div>
+			<p className="mt-4 mb-5">
+				Download this report as a CSV -
+				<CSVLink
+					data={displayCategories}
+					filename={"expcategories.csv"}
+					target="_blank"
+				>
+					Click here
+				</CSVLink>
+			</p>
 		</div>
 	);
 };
