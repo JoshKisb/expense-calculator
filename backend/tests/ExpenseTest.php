@@ -1,6 +1,6 @@
 <?php
 
-use App\Expense;
+use App\Models\Expense;
 use PHPUnit\Framework\TestCase;
 
 class ExpenseTest extends TestCase

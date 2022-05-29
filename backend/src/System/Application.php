@@ -61,7 +61,8 @@ class Application {
          $middlewares = \App\Middlewares::$middlewares ?? [];
 
          foreach ($middlewares as $middleware) {
-            $this->applyMiddleware(new $middleware);
+            if (class_exists($middleware))
+               $this->applyMiddleware(new $middleware);
          }
       }
    }

@@ -6,9 +6,18 @@ Developed in PHP and React-Typescript
 ## Running the application  
 To run this application you need to have php installed  
 
+### Build the backend  
+There are no php dependencies except for phpunit   
+but composer is used for autoloading. 
+
+```bash  
+cd backend
+composer install
+composer dump-autoload -o
+```
+
 ### Start the server
-```bash
-cd backend 
+```bash  
 php -S localhost:8080 -t public
 ```
 

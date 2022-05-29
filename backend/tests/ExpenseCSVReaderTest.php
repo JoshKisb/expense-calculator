@@ -1,7 +1,7 @@
 <?php
 
-use App\Expense;
-use App\ExpenseCSVReader;
+use App\Models\Expense;
+use App\Models\ExpenseCSVReader;
 use PHPUnit\Framework\TestCase;
 
 class ExpenseCSVReaderTest extends TestCase{

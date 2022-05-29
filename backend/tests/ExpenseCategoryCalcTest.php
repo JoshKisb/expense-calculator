@@ -1,7 +1,7 @@
 <?php
 
-use App\Expense;
-use App\ExpenseCategoryCalc;
+use App\Models\Expense;
+use App\Models\ExpenseCategoryCalc;
 use PHPUnit\Framework\TestCase;
 
 class ExpenseCategoryCalcTest extends TestCase
