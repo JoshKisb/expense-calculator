@@ -44,14 +44,17 @@ class Application {
       if ($callback === false)
          return "404: Not Found";
 
-      if (is_callable($callback))
-         return call_user_func($callback, $this->request);
-      else if (is_array($callback)) {
+      if (is_array($callback)) {
          if (!method_exists($callback[0], $callback[1])) {
             throw new Exception("No method {$callback[1]} on class {$callback[0]}");
          }
          $controller = new $callback[0];
-         return $controller->$callback[1]($this->request);
+         return $controller->{$callback[1]}($this->request);
+      }
+      else if (is_callable($callback)) {
+         // apparently this still works for classes without an instance
+         // but you cannot use $this
+         return call_user_func($callback, $this->request);
       }
    }
 

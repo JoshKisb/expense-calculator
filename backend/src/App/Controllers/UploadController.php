@@ -8,7 +8,15 @@ use System\Controller;
 use System\Request;
 use System\Response;
 
-class UploadController extends Controller {
+class UploadController extends Controller 
+{
+
+   // private function saveToSession($data)
+   // {
+   //    $results = json_decode($_SESSION['results'] ?? "[]");
+   //    $results[time()] = $data;
+   //    $_SESSION['results'] = json_encode($results);
+   // }
 
    public function upload(Request $request)
    {
@@ -51,6 +59,10 @@ class UploadController extends Controller {
                   "amount" => $total
                ];
             }
+
+            // save to session
+            // $this->saveToSession($result);
+
             $data = ["categories" => $result];
             return Response::json($data);
          } else {
