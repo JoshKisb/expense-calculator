@@ -11,4 +11,4 @@ $app->router->get('/', function() {
    return "Hello from custom framework";
 });
 
-$app->router->get('/upload', [UploadController::class, 'index']);
+$app->router->post('/upload', [UploadController::class, 'upload']);

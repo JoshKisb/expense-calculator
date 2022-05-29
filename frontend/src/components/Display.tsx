@@ -13,7 +13,7 @@ const Display: React.FC = () => {
 
 	const uploadCSV = (formData: FormData) => {
 		const apiUrl = import.meta.env.VITE_API_URL;
-		const url = `${apiUrl}/upload.php`;
+		const url = `${apiUrl}/upload`;
 
 		setLoading(true);
 		axios

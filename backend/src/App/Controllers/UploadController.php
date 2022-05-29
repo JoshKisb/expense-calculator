@@ -6,6 +6,7 @@ use App\Models\ExpenseCategoryCalc;
 use App\Models\ExpenseCSVReader;
 use System\Controller;
 use System\Request;
+use System\Response;
 
 class UploadController extends Controller {
 
@@ -51,10 +52,10 @@ class UploadController extends Controller {
                ];
             }
             $data = ["categories" => $result];
-            return json_encode($data);
+            return Response::json($data);
          } else {
             http_response_code(400);
-            return json_encode(["error" => $errors]);
+            return Response::json(["error" => $errors]);
          }
    
       }
