@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CSVLink } from "react-csv";
 import { Category } from "../interfaces/Category";
 
@@ -14,6 +14,9 @@ const enum SortDirection {
 const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 	const [displayCategories, setDisplayCategories] = useState(categories);
 	const [sortDir, setSortDir] = useState(SortDirection.Desc);
+	const total = useMemo(() => {
+		return categories.reduce((sum, cat) => sum + cat.amount, 0);
+	}, [categories]);
 
 	const toggleSortDir = () => {
 		setSortDir((state) =>
@@ -69,7 +72,8 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 										<td>{category.name}</td>
 										<td>
 											{category.amount.toLocaleString(
-												"en-US"
+												"en-US",
+												{ maximumFractionDigits: 2 }
 											)}
 										</td>
 									</tr>
@@ -86,6 +90,12 @@ const ResultTable: React.FC<ResultTableProps> = ({ categories }) => {
 						)}
 					</tbody>
 				</table>
+				<h5 className="mt-4">
+					Total: &nbsp;
+					{total.toLocaleString("en-US", {
+						maximumFractionDigits: 2,
+					})}
+				</h5>
 			</div>
 			<p className="mt-4 mb-5">
 				Download this report as a CSV -
